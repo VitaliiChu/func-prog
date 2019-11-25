@@ -1,13 +1,10 @@
 class Rectangle {
-    private width: number
-    private height: number
-    private color: string
-
-    constructor(width: number, heigth: number, color: string) {
-        this.width = width
-        this.height = heigth
-        this.color = color
-    }
+    constructor(
+        private width: number,
+        private height: number,
+        private color: string,
+        private name: string
+    ) {}
 
     public getColor(): string {
         return this.color
@@ -20,6 +17,10 @@ class Rectangle {
     public getSquare(): number {
         return this.height * this.width
     }
+
+    public getName(): string {
+        return this.name
+    }
 }
 
 function hasColor(color: string) {
@@ -28,6 +29,26 @@ function hasColor(color: string) {
     }
 }
 
-let figure: Rectangle = new Rectangle(5, 5, "red")
+function map<T>(f: (value: T, index: number, array: T[]) => unknown): Function {
+    return (arr: T[]) => arr.map(f)
+}
 
-console.log(hasColor("red")(figure))
+function filter<T>(
+    f: (value: T, index: number, array: T[]) => boolean
+): Function {
+    return (arr: T[]) => arr.filter(f)
+}
+
+function reduce<T>(
+    f: (total: T, currentValue: T, currentIndex: number, array: T[]) => T,
+    initialValue: T
+): Function {
+    if (initialValue != undefined)
+        return (arr: T[]) => arr.reduce(f, initialValue)
+    else return (arr: T[]) => arr.reduce(f)
+}
+
+let figures: Rectangle[] = [
+    new Rectangle(5, 5, "red", "first"),
+    new Rectangle(2, 3, "black", "second")
+]
